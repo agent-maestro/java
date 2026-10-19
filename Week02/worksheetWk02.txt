@@ -1,0 +1,561 @@
+==========================================================================
+ SECTION 1 — CLEAN CODE AND NAMING
+==========================================================================
+
+QUESTION 1 — Why does clean code matter in professional software development?
+
+ANSWER:
+Clean code is easier to understand, test, maintain, debug, and improve,
+which saves time and reduces the risk of introducing bugs.
+
+WHY:
+Software is often worked on by many people over years. Readable code lets
+someone else understand the intent without needing its original author.
+Poorly organized code increases the cost of every future change.
+
+REAL-WORLD EXAMPLE:
+A technician reading a clearly labeled maintenance procedure can find a
+fault faster than one reading an unlabeled list of cryptic steps. Code is
+similar: clear names and organization reduce troubleshooting time.
+
+--------------------------------------------------------------------------
+QUESTION 2 — What is the golden rule of naming conventions in Java?
+
+ANSWER:
+Choose meaningful, descriptive, consistent names that communicate what a
+variable, method, or class represents or does.
+
+WHY:
+A reader should understand the purpose from the name without tracing the
+entire program.
+
+JAVA CODE:
+    int studentAge = 16;       // Clear: age of a student.
+    double accountBalance = 50.0; // Clear: money in an account.
+    boolean isActive = true;   // Boolean names often read like yes/no questions.
+
+STYLE REFERENCE:
+    class StudentRecord { }   // PascalCase for class names.
+    // calculateTotal()       // camelCase for method names.
+    // studentAge             // camelCase for variable names.
+    // MAX_RETRIES            // UPPER_SNAKE_CASE for constants.
+
+--------------------------------------------------------------------------
+QUESTION 3 — Which is a better variable name and why: x or studentAge?
+
+ANSWER:
+studentAge is better because it describes what the value means; x does not.
+
+WHY:
+Single-letter names can be fine for tiny, obvious loops, but descriptive
+names are better for business information or values used across many lines.
+
+JAVA CODE:
+    int x = 17;               // The reader cannot tell what 17 represents.
+    int studentAge = 17;      // The meaning is immediately clear.
+
+--------------------------------------------------------------------------
+QUESTION 4 — Rewrite this messy code with better variable names.
+
+ORIGINAL:
+    int a = 5; int b = 10; int c = a + b; System.out.println(c);
+
+ANSWER (assuming these numbers represent two scores):
+    int firstScore = 5;           // First value being added.
+    int secondScore = 10;         // Second value being added.
+    int totalScore = firstScore + secondScore; // Meaningful result name.
+    System.out.println(totalScore);            // Prints: 15
+
+WHY:
+Names should reflect the ACTUAL domain of the program. If these values
+represent prices or quantities instead, use names such as firstPrice or
+itemCount. Descriptive names are not automatically correct if the meaning
+is guessed incorrectly.
+
+--------------------------------------------------------------------------
+QUESTION 5 — What is the recommended indentation size in Java?
+
+ANSWER:
+Four spaces per indentation level is a widely used Java convention.
+
+WHY:
+Consistent indentation makes nested blocks easier to follow. A project
+may use its own formatter or style guide; follow that team's rules.
+
+JAVA CODE:
+    if (true) {
+        System.out.println("First level: 4 spaces");
+        if (true) {
+            System.out.println("Second level: 8 spaces");
+        }
+    }
+
+--------------------------------------------------------------------------
+QUESTION 6 — Reformat the code to follow clean formatting standards.
+
+ORIGINAL:
+    if(age>=18){System.out.println("Eligible");}else{System.out.println("Not eligible");}
+
+ANSWER:
+    if (age >= 18) {                    // Check whether age meets the threshold.
+        System.out.println("Eligible");
+    } else {                            // Runs if age is less than 18.
+        System.out.println("Not eligible");
+    }
+
+WHY:
+Spacing, braces, and newlines clearly separate the condition from each
+possible result. This example assumes the variable age has already been
+declared, for instance: int age = 20;
+
+==========================================================================
+ SECTION 2 — COMMENTS, METHODS, AND CORE PRINCIPLES
+==========================================================================
+
+QUESTION 7 — What should comments explain: the "what" or the "why"?
+
+ANSWER:
+Comments should usually explain WHY something is done, particularly when
+the reasoning is not obvious from the code itself.
+
+WHY:
+Good code usually communicates WHAT it does. Comments become most useful
+for business rules, workarounds, assumptions, or non-obvious decisions.
+
+JAVA CODE:
+    // Not useful: add one to attempts.
+    attempts++;
+
+    // Useful: allow exactly one more try before locking this session.
+    attempts++;
+
+NOTE:
+For study exercises, extra WHAT-comments are fine while learning syntax.
+In production, avoid comments that merely repeat obvious statements.
+
+--------------------------------------------------------------------------
+QUESTION 8 — Write a JavaDoc comment for a method calculating rectangle area.
+
+ANSWER:
+    /**
+     * Calculates the area of a rectangle using width times height.
+     *
+     * @param width the rectangle's width; must not be negative
+     * @param height the rectangle's height; must not be negative
+     * @return the rectangle's area in square units
+     * @throws IllegalArgumentException if width or height is negative
+     */
+    public static double calculateRectangleArea(double width, double height) {
+        if (width < 0 || height < 0) {
+            throw new IllegalArgumentException("Dimensions cannot be negative");
+        }
+        return width * height;
+    }
+
+WHY:
+/** ... */ is a JavaDoc documentation comment. @param describes inputs;
+@return describes the result; @throws describes an exception the method
+may throw. The implementation matches the documentation by validating
+negative values.
+
+--------------------------------------------------------------------------
+QUESTION 9 — Why should methods be small and focused?
+
+ANSWER:
+Small, focused methods are easier to read, reuse, test, and debug because
+each method has one clear responsibility.
+
+WHY:
+If a method prints receipts, calculates taxes, processes payments, and
+saves files, a bug can be difficult to isolate. Separate the behaviors
+into appropriately named methods.
+
+JAVA CODE:
+    public static double calculateTax(double subtotal, double rate) {
+        return subtotal * rate; // One job: calculate tax.
+    }
+
+--------------------------------------------------------------------------
+QUESTION 10 — What does DRY stand for?
+
+ANSWER:
+DRY means "Don't Repeat Yourself."
+
+WHY:
+Avoid duplicating the same knowledge or logic in many places. Put
+repeated behavior in a reusable method when doing so improves clarity.
+
+JAVA CODE:
+    public static void printDivider() {
+        System.out.println("------------------------------");
+    }
+
+    // Call printDivider() anywhere the divider is needed instead of
+    // duplicating its implementation throughout the program.
+
+--------------------------------------------------------------------------
+QUESTION 11 — What does KISS stand for?
+
+ANSWER:
+KISS means "Keep It Simple, Stupid" (also commonly phrased as
+"Keep It Simple and Straightforward").
+
+WHY:
+Choose a clear, uncomplicated solution that meets the requirements.
+Extra complexity adds opportunities for bugs.
+
+JAVA CODE:
+    boolean isAdult = age >= 18; // Simple expression for a simple rule.
+
+    // You do not need a large nested if/else just to create this boolean.
+
+--------------------------------------------------------------------------
+QUESTION 12 — Rewrite this messy login-style code into a clean version.
+
+ORIGINAL:
+    if(u.equals("admin") && p.equals("1234")) {
+        System.out.println("ok");
+    } else {
+        System.out.println("no");
+    }
+
+ANSWER (classroom demonstration ONLY):
+    String username = "admin";
+    String password = "1234";
+
+    // Put the fixed string first so this comparison is safe even if
+    // username or password happens to be null.
+    boolean isExpectedUsername = "admin".equals(username);
+    boolean isExpectedPassword = "1234".equals(password);
+
+    if (isExpectedUsername && isExpectedPassword) {
+        System.out.println("Login accepted");
+    } else {
+        System.out.println("Login denied");
+    }
+
+WHY:
+Meaningful names and boolean conditions make the logic readable.
+SECURITY NOTE: This demonstrates IF conditions, NOT real authentication.
+Never hard-code real passwords in application source. Production systems
+need secure credential handling and password-hash verification.
+
+==========================================================================
+ SECTION 3 — CLASS DESIGN, ERRORS, AND EXCEPTIONS
+==========================================================================
+
+QUESTION 13 — What is the Single Responsibility Principle (SRP)?
+
+ANSWER:
+A class or module should have one primary responsibility, meaning it
+should have one main reason to change.
+
+WHY:
+For example, ReceiptCalculator should compute receipt amounts;
+ReceiptPrinter should handle displaying them. Changes to printing should
+not require editing calculation rules.
+
+--------------------------------------------------------------------------
+QUESTION 14 — Should classes depend on abstractions or concrete classes?
+
+ANSWER:
+For dependencies that may vary, prefer depending on abstractions such as
+interfaces rather than directly coupling high-level code to specific
+implementations.
+
+WHY:
+An interface can allow switching from one implementation to another
+without rewriting the client. This is the Dependency Inversion Principle.
+Do not create interfaces for every tiny class without a real need.
+
+JAVA CODE:
+    interface Notifier {
+        void send(String message); // Contract: how callers send messages.
+    }
+
+    class ConsoleNotifier implements Notifier {
+        @Override
+        public void send(String message) {
+            System.out.println(message); // One concrete implementation.
+        }
+    }
+
+--------------------------------------------------------------------------
+QUESTION 15 — What exception occurs if you divide a number by zero in Java?
+
+ANSWER:
+Integer division by zero throws ArithmeticException.
+
+JAVA CODE:
+    int result = 10 / 0; // Runtime ArithmeticException: / by zero.
+
+IMPORTANT DISTINCTION:
+    // Floating-point division behaves differently:
+    double result = 10.0 / 0.0; // Positive Infinity; no ArithmeticException.
+    // 0.0 / 0.0 evaluates to NaN (not a number).
+
+--------------------------------------------------------------------------
+QUESTION 16 — Use try/catch to handle integer division by zero gracefully.
+
+ANSWER (complete runnable example; save as SafeDivision.java):
+
+public class SafeDivision {
+    public static void main(String[] args) {
+        int a = 12;                 // Numerator: number being divided.
+        int b = 0;                  // Denominator: zero causes an error.
+
+        try {
+            int result = a / b;    // May throw ArithmeticException.
+            System.out.println("Result: " + result);
+        } catch (ArithmeticException error) {
+            // Prevent the exception from terminating this example.
+            // Explain the issue in language the user understands.
+            System.out.println("Cannot divide an integer by zero.");
+        }
+    }
+}
+
+EXPECTED OUTPUT:
+    Cannot divide an integer by zero.
+
+WHY:
+Java runs code in try. If arithmetic division throws the exception,
+control jumps to catch and a helpful message is printed.
+A guard such as 'if (b == 0)' is often even simpler when zero is expected.
+Do not silently hide errors in production systems.
+
+--------------------------------------------------------------------------
+QUESTION 17 — What is wrong with the class name MyClass? Suggest a better one.
+
+ANSWER:
+MyClass is vague and does not communicate the class's purpose. A better
+name, when the class models a book, is Book; when it calculates invoices,
+InvoiceCalculator.
+
+WHY:
+Java class names conventionally use PascalCase, which MyClass already
+does. Its problem is lack of meaning, not capitalization.
+
+--------------------------------------------------------------------------
+QUESTION 18 — Write a Book class with title, author, price, getters/setters.
+
+ANSWER (save as Book.java):
+
+public class Book {
+    // Private fields protect internal state from direct outside edits.
+    private String title;
+    private String author;
+    private double price;
+
+    // Constructor builds an object in a valid starting state.
+    public Book(String title, String author, double price) {
+        setTitle(title);   // Reuse setter validation.
+        setAuthor(author);
+        setPrice(price);
+    }
+
+    public String getTitle() {
+        return title;      // Read the title without exposing the field.
+    }
+
+    public void setTitle(String title) {
+        if (title == null || title.trim().isEmpty()) {
+            throw new IllegalArgumentException("Title cannot be blank");
+        }
+        this.title = title; // 'this.title' refers to the object's field.
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        if (author == null || author.trim().isEmpty()) {
+            throw new IllegalArgumentException("Author cannot be blank");
+        }
+        this.author = author;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        if (!Double.isFinite(price) || price < 0) {
+            throw new IllegalArgumentException("Price must be finite and >= 0");
+        }
+        this.price = price;
+    }
+}
+
+USAGE EXAMPLE (inside main in another class):
+    Book javaBook = new Book("Learning Java", "A. Writer", 29.99);
+    System.out.println(javaBook.getTitle()); // Learning Java
+    javaBook.setPrice(24.99);                 // Update using validation.
+    System.out.println(javaBook.getPrice());  // 24.99
+
+WHY:
+This illustrates encapsulation: data is private; public methods control
+how it is read and changed. The constructor and setters reject invalid
+data. For actual monetary accounting, BigDecimal or integer cents is
+generally preferable to double because of decimal rounding.
+
+--------------------------------------------------------------------------
+QUESTION 19 — Refactor the messy class into clean code.
+
+ORIGINAL:
+    public class c {
+        int x;
+        void m(int a, int b) {
+            x = a + b;
+            if (x > 10) {
+                System.out.println("ok");
+            } else {
+                System.out.println("no");
+            }
+        }
+    }
+
+ANSWER (save as SumChecker.java):
+
+public class SumChecker {
+    private int total; // State has a descriptive name.
+
+    public void calculateAndDisplayStatus(int firstNumber, int secondNumber) {
+        total = firstNumber + secondNumber; // Calculate the sum.
+
+        if (total > 10) {                    // Explain what 'ok' means.
+            System.out.println("Sum is greater than 10");
+        } else {
+            System.out.println("Sum is 10 or less");
+        }
+    }
+
+    public int getTotal() {
+        return total;
+    }
+}
+
+WHY:
+SumChecker, total, and calculateAndDisplayStatus describe intent.
+Fields are private to limit accidental edits. A more advanced refactor
+could separate calculation from printing so the method has one job:
+
+    // public int add(int firstNumber, int secondNumber) {
+    //     return firstNumber + secondNumber;
+    // }
+
+The first version stays closer to the behavior of the worksheet's code.
+
+==========================================================================
+ SECTION 4 — READABILITY AND FINAL PROGRAM
+==========================================================================
+
+QUESTION 20 — Why is code said to be "read 10x more often than written"?
+
+ANSWER:
+The phrase emphasizes that developers spend substantial time reading,
+reviewing, debugging, and modifying existing code, so readability matters.
+
+WHY:
+"10x" is a rule of thumb, not a universal measured ratio.
+
+--------------------------------------------------------------------------
+QUESTION 21 — Which naming style is preferred in Java: camelCase or snake_case?
+
+ANSWER:
+camelCase is preferred for variable and method names.
+
+JAVA CODE:
+    int totalItems = 5;           // camelCase variable.
+    // calculateAverage()         // camelCase method.
+    // class OrderReceipt { }     // PascalCase class.
+    // static final int MAX_SIZE  // UPPER_SNAKE_CASE constant.
+
+--------------------------------------------------------------------------
+QUESTION 22 — What is a common mistake beginners make with comments?
+
+ANSWER:
+They often comment every obvious line, repeat WHAT the code already
+says, or leave outdated comments that no longer match the implementation.
+
+WHY:
+A misleading comment can be worse than no comment. Prefer clear code
+and use comments to preserve non-obvious intent or important constraints.
+
+JAVA CODE:
+    // Poor comment: increase x by 1.
+    x++;
+
+    // Better comment: count a failed attempt for lockout enforcement.
+    failedAttempts++;
+
+--------------------------------------------------------------------------
+QUESTION 23 — Main benefit of meaningful method and variable names?
+
+ANSWER:
+Meaningful names make a program easier to understand without requiring
+extra detective work or unnecessary comments.
+
+WHY:
+Compare process() with calculateMonthlyPayment(): the second tells you
+what to expect even before you open its implementation.
+
+--------------------------------------------------------------------------
+QUESTION 24 — Write a program to calculate the average of three numbers.
+
+ANSWER (complete runnable program; save as AverageCalculator.java):
+
+public class AverageCalculator {
+
+    /**
+     * Calculates the average of three numeric values.
+     * @param firstNumber first input value
+     * @param secondNumber second input value
+     * @param thirdNumber third input value
+     * @return the arithmetic mean of the three values
+     */
+    public static double calculateAverage(
+            double firstNumber,
+            double secondNumber,
+            double thirdNumber) {
+
+        // Keep the calculation in a reusable method. The 3.0 indicates
+        // floating-point arithmetic and makes the intended result clear.
+        double sum = firstNumber + secondNumber + thirdNumber;
+        return sum / 3.0;
+    }
+
+    public static void main(String[] args) {
+        // Each variable name describes its role.
+        double firstScore = 80.0;
+        double secondScore = 90.0;
+        double thirdScore = 100.0;
+
+        // Call the method instead of placing calculation logic in main.
+        double averageScore = calculateAverage(
+                firstScore, secondScore, thirdScore);
+
+        // Print a readable label with the result.
+        System.out.println("Average score: " + averageScore);
+    }
+}
+
+EXPECTED OUTPUT:
+    Average score: 90.0
+
+STEP-BY-STEP:
+  1. main() begins program execution.
+  2. Three double variables hold scores: 80.0, 90.0, and 100.0.
+  3. calculateAverage() receives copies of those three values.
+  4. sum is 80.0 + 90.0 + 100.0 = 270.0.
+  5. 270.0 / 3.0 = 90.0.
+  6. return sends 90.0 back to main().
+  7. println displays the final result.
+
+WHY THIS IS CLEAN:
+  * PascalCase class name: AverageCalculator.
+  * camelCase variables and method: averageScore, calculateAverage.
+  * Consistent indentation and spacing.
+  * One focused calculation method separate from output.
+  * JavaDoc describing the method's purpose and return value.

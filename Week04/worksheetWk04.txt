@@ -1,0 +1,993 @@
+======================================================================
+SECTION 1 — VARIABLE SCOPE IN JAVA (25 QUESTIONS)
+======================================================================
+
+1) In one sentence, define "scope."
+
+	where Java recognizes a declared name.
+
+2) True/False: A variable declared inside a method is accessible outside
+   that method.
+
+	False
+
+
+3) What's wrong here?
+   public static void main(String[] args){ int x = 10; }
+   System.out.println(x);
+
+	The println statement is outside the main method
+	x is local to main.
+
+4) Fill in: Variables declared inside { } have ______ scope.
+
+	Block scope 
+
+5) Mark which has local scope:
+   a) method parameter   b) class field   c) static field
+
+	a) method parameter.
+
+
+6) What will this print and why?
+   int x = 5;
+   if (x > 0) {
+       int y = 10;
+       System.out.println(x + y);
+   }
+   
+
+15.
+
+x value is declared as 5. the if statement asks if x (which is 5) is greater than 0. in this case it is. going inside the statement we have x + y (5 + 10). which equals 15 so that what is printed. 
+
+7) True/False: Loop variables declared in a for header are visible after
+   the loop ends.
+
+False
+
+8) Fix the error by moving/declaring appropriately:
+   for (int i = 0; i < 3; i++) {}
+   System.out.println(i);
+
+int i;                         // Declare outside so i survives after loop.
+for (i = 0; i < 3; i++) {      
+    // Empty body; loop advances i to 3.
+}
+System.out.println(i);        // 3
+
+
+9) Instance scope belongs to the ______.
+
+Object
+
+10) Class (static) scope belongs to the ______.
+
+Class
+
+11) What is the lifetime of a local variable?
+
+A local variable is created on the stack when execution enters the block where it is declared, and it is destroyed when execution exits that block.
+
+12) What is the lifetime of a static field?
+
+From class initialization while its class remains active
+
+
+13) Identify shadowing and fix with this:
+class Student {
+    String name = "Default";
+    void setName(String name) {		//shadows name with setName
+        name = name;              // WRONG: parameter assigned to itself.
+    }
+}
+
+class Student {
+    String name = "Default";     // Object's instance field.
+    void setName(String name) {  // Parameter shadows field "name".
+        this.name = name;        // LEFT: object's field; RIGHT: parameter.
+    }
+}
+
+
+14) What error occurs if you use an uninitialized local variable?
+
+A compile-time error such as "variable x might not have been
+initialized"
+
+15) Why is keeping the "smallest possible scope" a best practice?
+
+It prevents unrelated code from accidentally using or changing a
+variable, makes code easier to understand, and helps with possible naming conflicts.
+
+16) Which line is illegal and why?
+   if (true) { int z = 7; }
+   int z = z + 1;
+
+The second line is illegal as it refers to the NEW local z
+in its own initializer. z has not been assigned. The first z is no longer
+in scope, so it is not the value being read.
+
+17) True/False: Method parameters are accessible from other methods in
+    the same class.
+
+False
+
+18) Convert this to avoid shadowing without renaming the parameter:
+class Box {
+    int size;
+    void setSize(int size) { /* set field */ }
+}
+
+class Box {
+    int size;              
+    void setSize(int size) {    
+        this.size = size;       // set the object's field.
+    }
+}
+
+19) Which has wider visibility: private field or public field?
+
+public field.
+
+20) Choose the correct line to access an instance field count:
+    a) count   b) ClassName.count   c) this.count (inside instance method)
+
+c) this.count is the clearest explicitly correct choice.
+
+21) What will this print?
+class C {
+    static int s = 1;
+    int i = 2;
+    static void f(){ /* can we use i here? */ }
+}
+
+Nothing prints; there is no println call.
+
+22) Why can't a static method directly access instance fields?
+
+A static method needs an object reference.
+
+23) Where is temp visible?
+    for (int k = 0; k < 2; k++) { int temp = 100; } // here?
+
+temp is visible inside the for loop.
+
+
+24) Complete to demonstrate block scope in a loop that prints 0,1,2.
+
+public class Main {
+    public static void main(String[] args) {
+        for (int i = 0; i < 3; i++) { 
+            int number = i;         
+            System.out.println(number); 
+        }
+    }
+}
+// Output:
+// 0
+// 1
+// 2
+
+25) Give one real example where narrowing scope reduces bugs.
+
+In a checkout program, calculate a discount inside the block that
+handles a qualifying coupon instead of exposing a temporary discount
+variable to unrelated payment calculations.
+
+
+26) Briefly explain "variable shadowing."
+
+Shadowing occurs when a declaration with a name hides another
+accessible declaration with the same name in a nested scope.
+Example: a setName(String name) parameter hides the object's name field;
+this.name accesses the field explicitly.
+
+======================================================================
+SECTION 2 — WEEK 4: CLASSES AND OBJECTS IN JAVA (25 QUESTIONS)
+======================================================================
+
+1) In one line: What is a class? What is an object?
+
+A class is a blueprint defining data and behavior; an object is a
+specific instance created from that class.
+
+2) Fill in class vs object:
+   Car blueprint -> CLASS
+   new Car()    -> OBJECT (a new Car instance)
+
+
+3) Complete the class and method call
+
+The blanks are "new" and "drive".
+class Car {
+    String model;                 // Each Car has its own model.
+    int year;                     // Each Car has its own year.
+    void drive() {                // Instance method acts on a Car object.
+        System.out.println(model + " driving");
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Car c = new Car();        // Instantiate a new Car.
+        c.model = "Civic";       // Set this object's model.
+        c.year = 2022;           // Set this object's year.
+        c.drive();               // Call method on this object.
+    }
+}
+// Output: Civic driving
+
+4) True/False: Fields are also called attributes or instance variables.
+
+true in common introductory usage for NON-STATIC fields.
+
+
+5) Add a parameterized constructor to set model and year.
+class Car {
+    String model;
+    int year;
+
+    Car(String model, int year) { // Constructor has SAME name as class.
+        this.model = model;      // Store argument in object's field.
+        this.year = year;        // No return type, not even void.
+    }
+}
+
+6) What will this print?
+class Student {
+    String name;
+    void introduce(){ System.out.println("I am " + name); }
+}
+// Inside main():
+// Student s = new Student();
+// s.name = "Alex";
+// s.introduce();
+
+output: I am Alex
+
+
+7) Why use private fields and public getters/setters? One sentence.
+
+To control how object data is read or changed
+
+8) Implement getters/setters for private double balance.
+class Wallet {
+    private double balance;          // Cannot directly edit from outside.
+
+    public double getBalance() {     // Read-only public access.
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        if (Double.isFinite(balance) && balance >= 0) {
+            this.balance = balance;  // Update only if valid.
+        }
+    }
+}
+
+
+9) Fix the constructor using this:
+class Book {
+    String title;
+    Book(String title){ title = title; }
+}
+
+
+class Book {
+    String title;
+    Book(String title) {
+        this.title = title;       // Set the field, not the parameter.
+    }
+}
+
+10) What is the default value of an object field (e.g., String title)
+    if not initialized?
+
+null for reference-typed fields such as String.
+
+
+11) Which access modifier allows use only within the same class?
+
+private.
+
+12) Complete encapsulation:
+class Account {
+    private double balance;
+    public void deposit(double amt) {
+        if (Double.isFinite(amt) && amt > 0) {
+            balance += amt;       // increase private balance.
+        }
+    }
+    public double getBalance() {
+        return balance;         // return private balance.
+    }
+}
+
+
+13) Create two Car objects and show they don't share instance state.
+class Car {
+    String model;
+}
+public class Main {
+    public static void main(String[] args) {
+        Car first = new Car();
+        Car second = new Car();
+        first.model = "Civic";
+        second.model = "Corolla";
+        System.out.println(first.model);  // Civic
+        System.out.println(second.model); // Corolla
+        first.model = "Accord";           // Change ONLY first.
+        System.out.println(second.model); // Still Corolla
+    }
+}
+Each object has its own instance field storage.
+
+14) True/False: You can call instance methods without creating an object.
+
+False
+
+15) When might a static method be appropriate? Give one example.
+
+For a helper calculation that does not need any object's state.
+class MathHelper {
+    static int square(int n) {
+        return n * n;           // Only uses the argument, not this.
+    }
+}
+
+
+16) What does this print and why?
+class Counter {
+    static int total = 0;
+    Counter(){ total++; }
+}
+// Inside main():
+// new Counter();
+// new Counter();
+// System.out.println(Counter.total);
+
+2.
+// Both constructor calls increment the ONE static field shared by
+// the Counter class
+
+17) Add a no-arg constructor that sets defaults and a second constructor
+    that takes all fields.
+
+class Product {
+    String name;
+    double price;
+
+    Product() {                  // No-argument constructor.
+        this("Unknown", 0.0);   // Delegates to the other constructor.
+    }
+
+    Product(String name, double price) { // Two-argument constructor.
+        this.name = name;
+        this.price = price;
+    }
+}
+
+
+18) Which line is correct to call display() on Product p?
+    a) Product.display();   b) p.display();
+
+b) p.display(); 
+
+19) Complete:
+
+class Server {
+    String region;
+    void deploy(String app) {
+        System.out.println("Deploy " + app + " in " + region);
+    }
+}
+Inside main():
+Server s = new Server();
+s.region = "eu-west";
+s.deploy("api");                
+
+Output: Deploy api in eu-west
+
+20) Why should class names use PascalCase and methods use camelCase?
+
+These standard Java naming conventions make code consistent,
+readable, and easier for other developers to understand.
+
+
+21) One sentence: What is a constructor used for?
+
+A constructor initializes a newly created object into a valid starting state.
+
+22) Write a toString() method for a Student(name, age).
+class Student {
+    String name;
+    int age;
+
+    Student(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    @Override
+    public String toString() {      // Object's text representation.
+        return "Student{name='" + name + "', age=" + age + "}";
+    }
+}
+Inside main():
+System.out.println(new Student("Alex", 18));
+Output: Student{name='Alex', age=18}
+println(object) automatically calls toString().
+
+23) What error do you get calling a method on a null reference?
+
+NullPointerException (at runtime).
+Student s = null;
+s.toString(); // Throws NullPointerException.
+
+null means no object is referenced.
+
+24) Show one advantage of modeling with classes vs using only functions
+    and arrays.
+
+A Product class keeps each item's name, price, and operations
+together, instead of managing separate parallel arrays of names/prices
+whose indexes can get out of sync.
+
+25) Small design prompt: Sketch fields and one method for Product.
+class Product {
+    String name;                   // Text describing the product.
+    double price;                  // Product's price.
+    int quantityInStock;           // Inventory available.
+
+    void restock(int amount) {     // Behavior that belongs to a product.
+        if (amount > 0) {
+            quantityInStock += amount;
+        }
+    }
+}
+
+======================================================================
+SECTION 3 — WEEK 4: THE IMPORTANCE OF OOP (25 QUESTIONS)
+======================================================================
+
+1) In one sentence: What is OOP?
+
+A way of organizing a program around objects that bundle data together
+with the methods that work on that data.
+
+2) Match term -> definition:
+
+ENCAPSULATION -> keep the data and the methods that use it together and
+                 control who can touch the data.
+INHERITANCE   -> build a new class from an existing one so it reuses its
+                 fields and methods.
+POLYMORPHISM  -> one method name can do different things depending on
+                 which object is actually there.
+ABSTRACTION   -> show what something does and hide how it does it.
+
+3) What benefit does encapsulation provide for security/maintenance?
+
+Outside code can't change the data directly, so bad values get blocked
+in a setter and the inside of the class can be rewritten without
+breaking the code that uses it.
+
+4) Identify the pillar illustrated:
+class Animal {
+    void sound(){ System.out.println("Some"); }
+}
+class Dog extends Animal {
+    @Override
+    void sound(){ System.out.println("Bark"); }
+}
+
+Inheritance. Dog extends Animal and overrides sound() with its own
+version.
+
+5) What will this print and which pillar?
+   Animal a = new Dog();
+   a.sound();
+
+Bark. Polymorphism.
+
+the reference is an Animal but the actual object is a Dog, so at
+runtime Java runs Dog's sound() instead of Animal's.
+
+6) Fill in: OOP models real systems using ______ and ______.
+
+classes and objects
+
+7) Give one reason large systems benefit from OOP.
+
+The code gets split into classes that each own one piece of the system,
+so you can change or test one piece without reading through everything
+else.
+
+8) True/False: Static methods are the core of OOP.
+
+False
+
+objects and their state are the core. a static method doesn't belong
+to any object.
+
+9) Why is composition often preferred over deep inheritance? (1 line)
+
+A class just holds the parts it needs (has-a) and can swap them out,
+instead of being stuck in a tall chain of parent classes where one
+change up top breaks everything below.
+
+10) What is a "God class," and why avoid it?
+
+One giant class that tries to do everything. It is hard to read, hard
+to test, and every change risks breaking something unrelated.
+
+11) Choose the best practice:
+    a) Many responsibilities per class
+    b) Single, focused responsibility
+
+b) Single, focused responsibility
+
+12) Match pillar -> one-sentence example in banking.
+
+ENCAPSULATION -> Account keeps balance private and only changes it
+                 through deposit() and withdraw().
+INHERITANCE   -> SavingsAccount extends Account and adds an interest
+                 rate.
+POLYMORPHISM  -> Account a = new SavingsAccount(); a.monthEnd(); runs
+                 the SavingsAccount version of monthEnd().
+ABSTRACTION   -> A Payment interface has pay() and the checkout code
+                 doesn't care if a card or a bank transfer is
+                 underneath.
+
+13) Briefly define the "S" in SOLID and give a tiny example name.
+
+Single Responsibility Principle: a class should do one job and have one
+reason to change. Example: InvoicePrinter only prints invoices, it
+doesn't calculate them.
+
+14) What is abstraction aiming to hide?
+
+The implementation details. You see what a method does, not how it
+does it.
+
+15) Which approach promotes reuse more naturally in OOP: classes or
+    global helpers? Why?
+
+Classes. A class packages the data with the methods that work on it, so
+you reuse the whole thing by making a new object or extending it,
+instead of copying loose helper functions around and hoping they still
+fit.
+
+16) Identify pillar:
+interface Payment { void process(); }
+class CreditCard implements Payment {
+    public void process(){ System.out.println("CC"); }
+}
+class Paypal implements Payment {
+    public void process(){ System.out.println("PP"); }
+}
+
+Polymorphism. Both classes implement the same Payment interface but
+each has its own process().
+
+Payment p = new Paypal();
+p.process();                  // PP
+
+17) Fill in: Polymorphism allows the same interface to have ______
+    implementations.
+
+different
+
+18) Name one common OOP design pattern and its purpose (1 line).
+
+Singleton: makes sure there is only ever one instance of a class (like
+one database connection) and hands everyone that same one.
+
+19) Why does OOP help teams collaborate?
+
+Everyone can work on their own class as long as the team agrees on the
+method names up front, so people aren't editing the same file and
+stepping on each other.
+
+20) True/False: OOP guarantees simplicity for tiny scripts.
+
+False
+
+a 10 line script doesn't need classes, it would just be extra typing.
+
+21) Which is more OOP: returning a Receipt object or printing text
+    inside a calculator method? Why?
+
+Returning a Receipt object. The calculator just calculates, and the
+Receipt holds the result so it can be printed, saved, or tested
+separately. Printing inside the method mixes two jobs into one.
+
+22) Briefly contrast OOP vs procedural for maintenance.
+
+Procedural code is a list of functions all working on shared data, so
+changing the data can break functions all over the program. OOP keeps
+the data and its functions inside one class, so a change stays in one
+spot.
+
+23) What is the danger of exposing fields as public in large systems?
+
+Any code anywhere can set them to anything, like a negative balance,
+and when something breaks you can't tell where the bad value came from.
+
+24) Give a real-world domain and list 3 classes you'd model.
+
+Airline: Flight, Passenger, Booking
+
+25) Short answer: How does OOP reduce bugs over time?
+
+Private fields stop bad data from getting in, each class is small
+enough to test on its own, and a change inside one class doesn't leak
+into the rest of the program.
+
+======================================================================
+SECTION 4 — WEEK 4: IMPLEMENTING REAL-WORLD ENTITIES IN JAVA
+======================================================================
+
+1) Identify nouns and verbs in: "A store sells products to customers
+   using orders."
+
+Nouns: store, products, customers, orders
+Verb: sells
+
+nouns usually become classes and verbs become methods.
+
+2) Convert these to classes (names only): customer, product, order.
+
+Customer, Product, Order
+
+3) For Product, list two fields and one method (names only).
+
+Fields: name, price
+Method: display()
+
+4) Implement a minimal Product.
+
+class Product {
+    String name;                  // Starts as null.
+    double price;                 // Starts as 0.0.
+
+    void display() {
+        System.out.println(name + ": $" + price);
+    }
+}
+
+4b) What will new Product().display() print if fields aren't set?
+
+null: $0.0
+
+name is a String so it defaults to null, and price is a double so it
+defaults to 0.0.
+
+5) Add a constructor to set name and price.
+
+class Product {
+    String name;
+    double price;
+
+    Product(String name, double price) {   // Same name as the class, no return type.
+        this.name = name;                  // this.name is the field, name is the parameter.
+        this.price = price;
+    }
+
+    void display() {
+        System.out.println(name + ": $" + price);
+    }
+}
+Inside main():
+new Product("Pen", 2.5).display();
+Output: Pen: $2.5
+
+6) Implement Cart with Product[] items and double total() (sum prices,
+   ignore nulls).
+
+class Cart {
+    Product[] items;              // Uses the Product from question 5.
+
+    Cart(Product[] items) {
+        this.items = items;
+    }
+
+    double total() {
+        double sum = 0;                   // Start at zero.
+        for (Product p : items) {         // Look at every slot in the array.
+            if (p != null) {              // Skip the empty slots.
+                sum += p.price;           // Add the price.
+            }
+        }
+        return sum;
+    }
+}
+Inside main():
+Product pen = new Product("Pen", 2.5);
+Product book = new Product("Book", 7.0);
+Cart cart = new Cart(new Product[] { pen, null, book });
+System.out.println(cart.total());
+Output: 9.5
+
+7) Fill with encapsulation:
+
+The blanks are balance += amt; balance -= amt; and return balance;
+
+class Account {
+    private double balance;
+
+    public void deposit(double amt) {
+        if (amt > 0) {
+            balance += amt;               // Add to the private balance.
+        }
+    }
+
+    public boolean withdraw(double amt) {
+        if (amt > 0 && amt <= balance) {
+            balance -= amt;               // Take from the private balance.
+            return true;                  // It worked.
+        }
+        return false;                     // Not enough money.
+    }
+
+    public double getBalance() {
+        return balance;                   // Read only, nobody outside can set it.
+    }
+}
+
+8) Show one-to-one:
+
+The blank is Passport.
+
+class Passport {
+    String number;
+}
+class Person {
+    String name;
+    Passport passport;            // One Person holds one Passport.
+}
+
+9) Show one-to-many with an array field in Course or Student.
+
+class Student {
+    String name;
+}
+class Course {
+    String title;
+    Student[] students;           // One Course holds many Students.
+}
+
+10) True/False: Every relationship should use inheritance.
+
+False
+
+inheritance is only for is-a. a Car is not an Engine, it has one.
+
+11) Prefer composition: Give one example replacing inheritance with has-a.
+
+class Engine {
+    void start() { System.out.println("Engine started"); }
+}
+class Car {
+    Engine engine = new Engine();     // Car HAS-A Engine.
+
+    void start() {
+        engine.start();               // Car hands the job to its engine.
+    }
+}
+
+instead of class Car extends Engine, which would be saying a Car IS an
+Engine.
+
+12) Implement a simple Library with findAvailable().
+
+class Book {
+    String title;
+    boolean available = true;         // New books start available.
+
+    Book(String title) {
+        this.title = title;
+    }
+}
+class Library {
+    Book[] books;
+
+    Library(Book[] books) {
+        this.books = books;
+    }
+
+    void findAvailable() {
+        for (Book b : books) {                   // Check every slot.
+            if (b != null && b.available) {      // Skip empty slots and checked out books.
+                System.out.println(b.title);
+            }
+        }
+    }
+}
+Inside main():
+Book a = new Book("Java Basics");
+Book b = new Book("Clean Code");
+b.available = false;              // Checked out.
+Library lib = new Library(new Book[] { a, b });
+lib.findAvailable();
+Output: Java Basics
+
+13) What will this print?
+class Patient {
+    double temperature;
+    boolean hasFever(){ return temperature > 100.4; }
+}
+// Inside main():
+// Patient p = new Patient();
+// p.temperature = 99.5;
+// System.out.println(p.hasFever());
+
+false
+
+99.5 is not greater than 100.4, and Java prints booleans in lowercase.
+
+14) Add getters/setters for private String name in Student.
+
+class Student {
+    private String name;
+
+    public String getName() {             // Getter reads the field.
+        return name;
+    }
+
+    public void setName(String name) {    // Setter changes the field.
+        if (name != null) {
+            this.name = name;
+        }
+    }
+}
+Inside main():
+Student s = new Student();
+s.setName("Alex");
+System.out.println(s.getName());
+Output: Alex
+
+15) Implement Order: Product[] items, String status, confirm().
+
+class Order {
+    Product[] items;
+    String status = "PENDING";    // Every order starts out pending.
+
+    void confirm() {
+        status = "CONFIRMED";     // Flip the status.
+    }
+}
+Inside main():
+Order o = new Order();
+o.confirm();
+System.out.println(o.status);
+Output: CONFIRMED
+
+16) Build a tiny Server model that deploys an app only if active == true.
+
+class Server {
+    String region;
+    boolean active;               // Defaults to false.
+
+    void deploy(String app) {
+        if (active) {
+            System.out.println("Deploy " + app + " in " + region);
+        } else {
+            System.out.println("Server is inactive, cannot deploy " + app);
+        }
+    }
+}
+Inside main():
+Server s = new Server();
+s.region = "us-west";
+s.deploy("api");                  // Server is inactive, cannot deploy api
+s.active = true;
+s.deploy("api");                  // Deploy api in us-west
+
+17) Where would you validate inputs: constructors, setters, or both?
+
+Both. The constructor stops a bad object from being created in the
+first place, and the setters stop it from going bad later.
+
+18) What anti-pattern is this? Why is it bad?
+class EverythingManager {
+    Product[] products;
+    Account[] accounts;
+    Patient[] patients;
+    // and 50 more fields and responsibilities
+    void doAll() { /* hundreds of responsibilities */ }
+}
+
+God class. It is managing products, accounts, patients and 50 other
+things in one place, so it is huge, hard to test, and changing one part
+can break all the others.
+
+19) Pick better names: Data, Thing, Stuff -> 3 specific class names.
+
+Data  -> CustomerProfile
+Thing -> Product
+Stuff -> Inventory
+
+20) Implement Receipt with double total, String id, and toString().
+
+class Receipt {
+    double total;
+    String id;
+
+    Receipt(String id, double total) {
+        this.id = id;
+        this.total = total;
+    }
+
+    @Override
+    public String toString() {
+        return "Receipt " + id + ": $" + total;
+    }
+}
+Inside main():
+System.out.println(new Receipt("R100", 12.5));
+Output: Receipt R100: $12.5
+
+21) Show object creation for two Students and a Course; assign both.
+
+class Student {
+    String name;
+
+    Student(String name) {
+        this.name = name;
+    }
+}
+class Course {
+    String title;
+    Student[] students;
+
+    Course(String title) {
+        this.title = title;
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Student s1 = new Student("Alex");          // First object.
+        Student s2 = new Student("Jordan");        // Second object.
+        Course c = new Course("Java 101");
+        c.students = new Student[] { s1, s2 };     // Both assigned to the course.
+        System.out.println(c.students[0].name);    // Alex
+        System.out.println(c.students[1].name);    // Jordan
+    }
+}
+
+22) Design prompt: Sketch fields for Transaction (3-4 fields).
+
+class Transaction {
+    String id;            // Unique id for this transaction.
+    double amount;        // How much money moved.
+    String date;          // When it happened.
+    String type;          // "DEPOSIT" or "WITHDRAWAL".
+}
+
+23) Add method applyDiscount(double rate) to Product that updates price.
+
+void applyDiscount(double rate) {         // rate is a fraction, 0.20 means 20% off.
+    if (rate >= 0 && rate <= 1) {         // Ignore nonsense like 150% off.
+        price = price * (1 - rate);       // 20% off means you pay 80%.
+    }
+}
+Example: price 100.0 with rate 0.20 -> 80.0
+
+24) Where would you use static in a retail system? One example.
+
+A tax rate that every sale uses. It belongs to the class, not to any
+one order, so it lives in one place instead of being copied into every
+object.
+
+class Store {
+    static final double TAX_RATE = 0.08;   // Shared by every order.
+}
+read it as Store.TAX_RATE
+
+25) One paragraph (3-4 lines): How do classes/objects help extension?
+
+Each class is its own piece, so adding a feature usually means adding a
+new class instead of editing old ones. If checkout only knows about a
+Payment interface, adding GiftCardPayment is just a new class that
+implements pay(), and the checkout code doesn't change at all. The old
+code keeps working and the new object plugs right in.

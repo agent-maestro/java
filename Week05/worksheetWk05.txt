@@ -1,0 +1,550 @@
+======================================================================
+SECTION 1 — ARRAYLIST BASICS
+======================================================================
+
+1. In one sentence, what is an ArrayList in Java and where does it live?
+
+A resizable list that keeps its elements in order, and it lives in the
+java.util package.
+
+2. Fill in the import and declaration for an empty ArrayList<String> names.
+
+import java.util.ArrayList;
+
+ArrayList<String> names = new ArrayList<>();   // Empty list, size() is 0.
+
+<String> means it only holds Strings. the <> on the right just copies the
+type from the left side.
+
+3. True/False: ArrayList can grow and shrink automatically at runtime.
+
+True
+
+add() makes it bigger and remove() makes it smaller, you never set a
+length.
+
+4. Which is valid for ArrayList<Integer> — add(42), add(0, 42), or both?
+
+Both.
+
+ArrayList<Integer> nums = new ArrayList<>();
+nums.add(42);        // Add to the end: [42]
+nums.add(0, 42);     // Insert at index 0 and push the rest right: [42, 42]
+
+======================================================================
+SECTION 2 — CREATING & ADDING
+======================================================================
+
+5. Create ArrayList<Integer> nums and add 10, 15 at index 0, then 20.
+
+ArrayList<Integer> nums = new ArrayList<>();
+nums.add(10);        // [10]
+nums.add(0, 15);     // Insert at the front: [15, 10]
+nums.add(20);        // Add to the end: [15, 10, 20]
+System.out.println(nums);
+Output: [15, 10, 20]
+
+6. What will the cities program print?
+
+    ArrayList<String> cities = new ArrayList<>();
+    cities.add("Paris");
+    cities.add("Prague");
+    cities.add(1, "Berlin");
+    System.out.println(cities);
+
+[Paris, Berlin, Prague]
+
+add(1, "Berlin") squeezes Berlin into index 1 and pushes Prague to
+index 2. it doesn't overwrite Prague, that would be set(1, "Berlin").
+
+7. Add "Alice", "Bob", "Charlie" and print the list.
+
+ArrayList<String> names = new ArrayList<>();
+names.add("Alice");      // Index 0.
+names.add("Bob");        // Index 1.
+names.add("Charlie");    // Index 2.
+System.out.println(names);
+Output: [Alice, Bob, Charlie]
+
+======================================================================
+SECTION 3 — ACCESSING & UPDATING
+======================================================================
+
+8. Get the first element of names (exact statement).
+
+String first = names.get(0);
+
+the first index is 0 and the last one is names.size() - 1.
+
+9. Replace element at index 1 with "David".
+
+names.set(1, "David");   // Bob becomes David, size stays 3.
+
+[Alice, David, Charlie]
+
+10. What exception could names.get(5) throw if size() is 3?
+
+IndexOutOfBoundsException
+
+only indexes 0, 1 and 2 exist. Java catches this at runtime, not when
+you compile.
+
+======================================================================
+SECTION 4 — REMOVING
+======================================================================
+
+11. Remove "Alice" by value.
+
+names.remove("Alice");   // Removes the first "Alice" it finds.
+
+12. Remove the first element by index.
+
+names.remove(0);         // Removes index 0 and shifts everything left.
+
+13. What does the Integer remove example print, and why?
+
+    ArrayList<Integer> nums = new ArrayList<>(List.of(1, 2, 3));
+    nums.remove(1);
+    System.out.println(nums);
+
+[1, 3]
+
+remove(1) with a plain int means remove INDEX 1, which is the value 2.
+to remove the value 1 you need nums.remove(Integer.valueOf(1)).
+
+======================================================================
+SECTION 5 — SIZE & CONTAINS
+======================================================================
+
+14. Complete the code for number of elements and membership.
+
+ArrayList<String> items = new ArrayList<>(List.of("pen", "pad"));
+System.out.println(items.size());          // How many elements.
+System.out.println(items.contains("pad")); // Is "pad" in there.
+Output:
+2
+true
+
+15. True/False: ArrayList preserves insertion order.
+
+True
+
+things stay in the order you added them unless you insert, remove or
+sort.
+
+16. True/False: ArrayList allows duplicate values.
+
+True
+
+items.add("pen");
+items.add("pen");    // Fine, now [pen, pen].
+
+======================================================================
+SECTION 6 — ITERATION
+======================================================================
+
+17. Use a for-index loop to print each name on a separate line.
+
+for (int i = 0; i < names.size(); i++) {   // i goes 0, 1, 2 ... size() - 1.
+    System.out.println(names.get(i));
+}
+
+18. Use an enhanced for-each loop to do the same.
+
+for (String name : names) {     // name is each element, one at a time.
+    System.out.println(name);
+}
+
+19. Use Iterator<String> it = names.iterator() to print all names.
+
+Iterator<String> it = names.iterator();
+while (it.hasNext()) {              // Is there another one?
+    String name = it.next();        // Grab it and move forward.
+    System.out.println(name);
+}
+
+needs import java.util.Iterator; at the top.
+
+20. Why prefer enhanced for-each over repeated get(i) in large lists?
+
+It is shorter and there's no index to get wrong, and it works the same
+on any collection. (get(i) is already fast on an ArrayList, the real
+speed difference is on a LinkedList where get(i) has to walk from the
+start every time.)
+
+======================================================================
+SECTION 7 — ARRAYLIST VS ARRAY
+======================================================================
+
+21. Fill in the table.
+
+Fixed size:                        Array
+Stores primitives directly:        Array
+Has add/remove/contains methods:   ArrayList
+Better when size changes a lot:    ArrayList
+
+arrays use arr.length and ArrayLists use list.size().
+
+22. Convert String[] arr to ArrayList<String> list.
+
+String[] arr = {"A", "B", "C"};
+ArrayList<String> list = new ArrayList<>(Arrays.asList(arr));  // Copies arr into a real list.
+
+needs import java.util.Arrays;
+
+Arrays.asList(arr) by itself is a fixed size list, wrapping it in
+new ArrayList<>() is what makes it growable.
+
+======================================================================
+SECTION 8 — SORTING & UTILITIES
+======================================================================
+
+23. Import and call sort to alphabetically sort names.
+
+import java.util.Collections;    // Top of the file, not inside main.
+
+Collections.sort(names);         // A to Z.
+
+capital letters sort before lowercase, so "Zoe" comes before "alice".
+
+24. After names.clear(), what does names.isEmpty() return?
+
+true
+
+names.clear();                         // Everything is gone.
+System.out.println(names.isEmpty());   // true
+System.out.println(names.size());      // 0
+
+25. Find first and last index of "Bob".
+
+int first = names.indexOf("Bob");
+int last = names.lastIndexOf("Bob");
+
+both give -1 if Bob isn't in the list.
+
+======================================================================
+SECTION 9 — REAL-WORLD SCENARIOS
+======================================================================
+
+26. Shopping cart: add Laptop, Mouse, remove Mouse, print cart.
+
+ArrayList<String> cart = new ArrayList<>();
+cart.add("Laptop");
+cart.add("Mouse");
+cart.remove("Mouse");    // Remove by value.
+System.out.println(cart);
+Output: [Laptop]
+
+27. Student management: add two Student objects.
+
+ArrayList<Student> students = new ArrayList<>();
+students.add(new Student("Alice", 19));
+students.add(new Student("Bob", 20));
+
+the list holds references to the two Student objects. (the Student
+class is in question 40.)
+
+28. Playlist: add three songs and print one per line.
+
+ArrayList<String> playlist = new ArrayList<>();
+playlist.add("Song A");
+playlist.add("Song B");
+playlist.add("Song C");
+
+for (String song : playlist) {
+    System.out.println(song);
+}
+Output:
+Song A
+Song B
+Song C
+
+======================================================================
+SECTION 10 — COMMON MISTAKES
+======================================================================
+
+29. Fix ArrayList<int> list = new ArrayList<>();.
+
+ArrayList<Integer> list = new ArrayList<>();
+
+generics only take object types, so you use the Integer wrapper instead
+of int. list.add(42) still works, Java boxes the 42 into an Integer for
+you.
+
+30. Why does names.get(2) throw for [A, B], and how can you prevent it?
+
+    ArrayList<String> names = new ArrayList<>(List.of("A", "B"));
+    System.out.println(names.get(2));
+
+Two elements means the only indexes are 0 and 1, so get(2) throws an
+IndexOutOfBoundsException. Check the index against size() first.
+
+int i = 2;
+if (i >= 0 && i < names.size()) {
+    System.out.println(names.get(i));
+} else {
+    System.out.println("No element at index " + i);
+}
+Output: No element at index 2
+
+31. Difference between these removes?
+
+    nums.remove(1);
+    nums.remove(Integer.valueOf(1));
+
+nums.remove(1) removes whatever is at INDEX 1.
+nums.remove(Integer.valueOf(1)) removes the first element whose VALUE
+is 1.
+
+ArrayList<Integer> a = new ArrayList<>(List.of(1, 2, 3));
+a.remove(1);                     // [1, 3]
+
+ArrayList<Integer> b = new ArrayList<>(List.of(1, 2, 3));
+b.remove(Integer.valueOf(1));    // [2, 3]
+
+======================================================================
+SECTION 11 — BEST PRACTICES
+======================================================================
+
+32. Rewrite to program to the interface.
+
+    ArrayList<String> logs = new ArrayList<>();
+
+List<String> logs = new ArrayList<>();   // Declare as List, create as ArrayList.
+
+needs import java.util.List;
+
+that way if you ever switch to a LinkedList only the right side changes,
+everything else that uses logs stays the same.
+
+33. Why check isEmpty() or size() > 0 before get(0)?
+
+get(0) on an empty list throws IndexOutOfBoundsException. Checking first
+lets you handle the empty case instead of crashing.
+
+if (!names.isEmpty()) {
+    System.out.println(names.get(0));
+} else {
+    System.out.println("List is empty");
+}
+
+34. Which loop is safest for removing items while iterating?
+
+An Iterator loop with it.remove().
+
+removing straight from the list inside a for-each throws
+ConcurrentModificationException because the loop's iterator notices the
+list changed under it.
+
+Iterator<String> it = names.iterator();
+while (it.hasNext()) {
+    String name = it.next();
+    if (name.equals("Bob")) {
+        it.remove();            // Remove through the iterator, not the list.
+    }
+}
+
+or just names.removeIf(n -> n.equals("Bob")); for a simple condition.
+
+======================================================================
+SECTION 12 — APPLIED / MINI-TASKS
+======================================================================
+
+35. Sum an ArrayList<Integer> scores and print it.
+
+ArrayList<Integer> scores = new ArrayList<>(List.of(80, 90, 100));
+int total = 0;                   // Start at zero.
+for (int score : scores) {       // Each Integer unboxes to an int.
+    total += score;              // Add it on.
+}
+System.out.println("Sum: " + total);
+Output: Sum: 270
+
+36. Write static int max(ArrayList<Integer> a), assume non-empty.
+
+static int max(ArrayList<Integer> a) {
+    int largest = a.get(0);          // Start with the first element.
+    for (int n : a) {
+        if (n > largest) {           // Found something bigger?
+            largest = n;             // Remember it.
+        }
+    }
+    return largest;
+}
+Inside main():
+System.out.println(max(new ArrayList<>(List.of(7, 2, 11, 3))));
+Output: 11
+
+37. Reverse-print names without modifying the list.
+
+for (int i = names.size() - 1; i >= 0; i--) {   // Last index, counting down.
+    System.out.println(names.get(i));
+}
+
+the list itself never changes, only the order we read it in.
+
+38. Keep first occurrences using HashSet<String> seen and ArrayList unique.
+
+ArrayList<String> names = new ArrayList<>(
+    List.of("Alice", "Bob", "Alice", "Charlie", "Bob"));
+HashSet<String> seen = new HashSet<>();
+ArrayList<String> unique = new ArrayList<>();
+
+for (String name : names) {
+    if (seen.add(name)) {       // add() returns true only the first time it sees a name.
+        unique.add(name);
+    }
+}
+System.out.println(unique);
+Output: [Alice, Bob, Charlie]
+
+needs import java.util.HashSet;
+
+the order comes from walking names in order, the HashSet is only there
+to remember what we've already seen.
+
+39. Sort five mixed-case cities case-insensitively.
+
+ArrayList<String> cities = new ArrayList<>(
+    List.of("seattle", "Austin", "boston", "Denver", "chicago"));
+cities.sort(String.CASE_INSENSITIVE_ORDER);   // Ignores upper vs lower case.
+System.out.println(cities);
+Output: [Austin, boston, chicago, Denver, seattle]
+
+40. Roster with objects: define Student, add 3, print name (age).
+
+import java.util.ArrayList;
+
+class Student {
+    String name;
+    int age;
+
+    Student(String name, int age) {
+        this.name = name;        // Field on the left, parameter on the right.
+        this.age = age;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        ArrayList<Student> roster = new ArrayList<>();
+        roster.add(new Student("Alice", 19));
+        roster.add(new Student("Bob", 20));
+        roster.add(new Student("Charlie", 18));
+
+        for (Student s : roster) {
+            System.out.println(s.name + " (" + s.age + ")");
+        }
+    }
+}
+Output:
+Alice (19)
+Bob (20)
+Charlie (18)
+
+======================================================================
+SECTION 13 — BONUS: ITERATOR REMOVAL SAFETY
+======================================================================
+
+41. Fix the bug caused by removing from a list inside for-each.
+
+    ArrayList<String> list = new ArrayList<>(List.of("keep", "drop", "keep"));
+    for (String s : list) {
+        if (s.equals("drop")) list.remove(s); // Unsafe during iteration
+    }
+
+the for-each is using an iterator behind the scenes, and list.remove()
+changes the list without telling that iterator. it either throws
+ConcurrentModificationException or quietly skips an element, so it is a
+bug either way.
+
+Iterator<String> it = list.iterator();
+while (it.hasNext()) {
+    String s = it.next();
+    if (s.equals("drop")) {
+        it.remove();           // The iterator does the removing.
+    }
+}
+System.out.println(list);
+Output: [keep, keep]
+
+shorter version: list.removeIf(s -> s.equals("drop"));
+
+======================================================================
+SECTION 14 — CHALLENGE: INVENTORY SYSTEM
+======================================================================
+
+42. Define Product(name, price), create an inventory, add four products,
+    print average price, remove products with price < 10, sort ascending,
+    and print remaining products.
+
+import java.util.ArrayList;
+import java.util.Comparator;
+
+class Product {
+    String name;
+    double price;
+
+    Product(String name, double price) {
+        this.name = name;
+        this.price = price;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        ArrayList<Product> inventory = new ArrayList<>();
+        inventory.add(new Product("Mouse Pad", 5.00));
+        inventory.add(new Product("Keyboard", 35.00));
+        inventory.add(new Product("USB Cable", 8.00));
+        inventory.add(new Product("Headset", 60.00));
+
+        // Average of all four, before anything gets removed.
+        double sum = 0;
+        for (Product p : inventory) {
+            sum += p.price;
+        }
+        double average = sum / inventory.size();
+        System.out.printf("Average price: $%.2f%n", average);
+
+        // Drop anything under $10.
+        inventory.removeIf(p -> p.price < 10);
+
+        // Cheapest first.
+        inventory.sort(Comparator.comparingDouble(p -> p.price));
+
+        for (Product p : inventory) {
+            System.out.printf("%s: $%.2f%n", p.name, p.price);
+        }
+    }
+}
+Output:
+Average price: $27.00
+Keyboard: $35.00
+Headset: $60.00
+
+5 + 35 + 8 + 60 = 108, and 108 / 4 = 27. Mouse Pad and USB Cable get
+removed, then 35 and 60 are already in order.
+
+======================================================================
+SECTION 15 — REFLECTION
+======================================================================
+
+43. When would you choose an array over an ArrayList? (1–2 lines)
+
+When I know the size up front and it won't change, like 12 monthly
+totals or a 3x3 board, especially with primitives since int[] doesn't
+need wrapper objects.
+
+44. What's one bug ArrayList's API helps you avoid? (1–2 lines)
+
+Running out of room. With an array you have to make a bigger one and
+copy everything over yourself when it fills up, ArrayList just grows
+when you call add().
+
+45. Name one Collections utility (other than sort) to try next and why.
+
+Collections.shuffle(list) randomly mixes up the order, good for
+shuffling a playlist or a deck of cards.
+
+Collections.shuffle(playlist);   // Random order every run.

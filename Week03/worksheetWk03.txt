@@ -1,0 +1,1119 @@
+======================================================================
+WORKSHEET A — CREATING & CALLING METHODS IN JAVA
+======================================================================
+
+1. In one sentence, what is a method in Java?
+ANSWER: A method is a named block of reusable code that performs a task and
+may receive input parameters and return a result.
+
+2. Write the method header for a public static method named greet that takes
+   no parameters and returns nothing.
+ANSWER:
+    public static void greet()
+// public = accessible outside the class
+// static = belongs to the class; no object required
+// void = returns no value
+// () = no parameters
+
+3. Where is a method called and where is it defined?
+    public class HelloWorld {
+        public static void greet() {                 // DEFINITION begins
+            System.out.println("Hello, World!");
+        }                                           // DEFINITION ends
+        public static void main(String[] args) {
+            greet();                                // METHOD CALL
+        }
+    }
+// The definition tells Java WHAT greet does; the call executes it.
+
+4. What will Printer print?
+ANSWER / OUTPUT:
+    Welcome to Skillspire Academy!
+    Welcome to Skillspire Academy!
+// printWelcome() is called twice in main, so it prints twice.
+
+5. Difference between method definition and method call?
+ANSWER: A definition declares and implements the method's behavior; a call
+invokes that behavior at a particular point in the program.
+
+6. True/False: A method must always return a value.
+ANSWER: FALSE. A void method completes without returning a value.
+// Non-void methods must return an appropriate result on every normal path.
+
+7. Fill: public static ____ methodName(____) { }
+ANSWER (one valid solution):
+    public static void methodName() { }
+// First blank is return type (void here); second is parameter list
+// (empty here). Other return types/parameters could also be valid.
+
+8. Complete Demo method.
+ANSWER:
+    public class Demo {
+        public static void sayHi() { // void; no parameters
+            System.out.println("Hi!");
+        }
+    }
+
+9. Better identifier: doStuff() or printReceipt()?
+ANSWER: printReceipt(), because it clearly communicates the method's purpose.
+// Descriptive camelCase names make code easier to read and maintain.
+
+10. Write printLine() printing 30 dashes.
+ANSWER:
+    public static void printLine() {
+        for (int i = 0; i < 30; i++) { // 30 iterations: 0 through 29
+            System.out.print("-");  // print stays on the same line
+        }
+        System.out.println();       // finish with a newline
+    }
+// OUTPUT: ------------------------------
+
+11. Keyword for method with no returned value?
+ANSWER: void.
+
+12. Where should methods be placed relative to main?
+ANSWER: Inside the class but outside main; they may appear before OR after main.
+// Java does not require method declarations to come before method calls.
+
+13. What does "method not found" usually mean?
+ANSWER: Java cannot resolve an accessible method matching the name and argument
+types; check spelling, capitalization, parameter count/types, visibility,
+and whether you are calling it on the correct class/object.
+
+14. Reformat yes() into a multi-line method.
+ANSWER:
+    public static void yes() {
+        System.out.println("Yes");
+    }
+// Same behavior, improved readability. OUTPUT: Yes
+
+15. Write printTitle(String title).
+ANSWER:
+    public static void printTitle(String title) {
+        System.out.println("=== " + title + " ===");
+    }
+// printTitle("Java"); prints: === Java ===
+// title is a parameter: a value supplied by the caller.
+
+16. Why call a method rather than copy-paste the same print statement?
+ANSWER: It reduces repeated code, makes changes in one place, improves
+readability, and avoids inconsistent copies or accidental mistakes.
+
+17. Methods help achieve m____, r____, and r____.
+ANSWER: modularity, reusability, and readability.
+// Also helpful: easier testing and maintenance.
+
+18. Add a second call to print "Ready" twice.
+ANSWER:
+    public static void show() {
+        System.out.println("Ready");
+    }
+    public static void main(String[] args) {
+        show(); // first call
+        show(); // second call
+    }
+// OUTPUT:
+// Ready
+// Ready
+
+19. What will beep() in a loop print?
+ANSWER / OUTPUT:
+    Beep
+    Beep
+    Beep
+// The for loop runs at i = 0, 1, and 2: three calls total.
+
+20. Write line(int n) printing n asterisks on one line.
+ANSWER:
+    public static void line(int n) {
+        for (int i = 0; i < n; i++) {
+            System.out.print("*"); // no newline between stars
+        }
+        System.out.println();      // newline after the stars
+    }
+// line(5); prints: *****
+// For n <= 0, this version prints a blank line.
+
+21. What's wrong with void hello() returning "Hello"?
+ANSWER: A void method cannot return a value.
+FIX OPTION A (return a String):
+    public static String hello() {
+        return "Hello";
+    }
+FIX OPTION B (print without returning a value):
+    public static void hello() {
+        System.out.println("Hello");
+    }
+
+22. True/False: Java allows methods to be defined inside methods.
+ANSWER: FALSE. You can call methods inside methods, but Java does not allow
+ordinary named method declarations nested inside another method body.
+
+23. Methods use c______C____.
+ANSWER: camelCase, e.g., calculateTax(), printReceipt(), greetUser().
+// Start lowercase; capitalize each subsequent word.
+
+24. Write greetUser() to print your name.
+ANSWER (example name):
+    public static void greetUser() {
+        System.out.println("Arturo");
+    }
+// Replace the example name with your own if desired.
+
+25. Why should a method "do one thing well"?
+ANSWER: A focused method is easier to understand, test, reuse, debug, and
+change without affecting unrelated features.
+
+======================================================================
+WORKSHEET B — PARAMETERS & RETURN VALUES
+======================================================================
+
+1. Parameter vs. argument.
+PARAMETER: A named input variable declared in a method definition.
+ARGUMENT: The actual value or expression passed when calling the method.
+
+2. Label parameter and argument.
+    public static void greet(String name) { /* ... */ }
+    greet("Alice");
+// PARAMETER: String name (declaration)
+// ARGUMENT: "Alice" (supplied value)
+
+3. Write add(int a, int b) returning the sum.
+ANSWER:
+    public static int add(int a, int b) {
+        return a + b; // return sends the computed int to the caller
+    }
+// Example: int answer = add(4, 6);  // answer is 10
+
+4. Output for add(10, 20)?
+ANSWER / OUTPUT: 30
+// 10 + 20 is 30; println displays the returned integer.
+
+5. Keyword to send a value back from a method?
+ANSWER: return.
+
+6. Complete half(int x).
+ANSWER:
+    public static double half(int x) {
+        return x / 2.0; // 2.0 causes floating-point division
+    }
+// half(5) = 2.5; using 2 instead would do integer division first.
+
+7. Technique used instead of default parameter values in Java?
+ANSWER: Method overloading, often with one overload calling another using
+a chosen default value.
+
+8. Overload greet() for guest and named greeting.
+ANSWER:
+    public static void greet() {
+        greet("Guest"); // delegate to overload with default name
+    }
+    public static void greet(String name) {
+        System.out.println("Hello, " + name);
+    }
+// greet(); prints "Hello, Guest"
+// greet("Maya"); prints "Hello, Maya"
+// Overloading = same method name, different parameter lists.
+
+9. Primitive parameters are passed by ______.
+ANSWER: value (a copy of the primitive's value).
+// Java always passes arguments by value; object-reference values are
+// copied too (see question 11).
+
+10. What does inc(int x) print for n = 5?
+ANSWER / OUTPUT:
+    Inside: 6
+    Outside: 5
+// x receives a copy of 5 and changes to 6; n stays 5.
+
+11. Objects are passed by copying the ______.
+ANSWER: reference VALUE (a copy of the reference to the same object).
+// The object itself is not copied. Java is NOT pass-by-reference.
+
+12. Output of StringBuilder append("!")?
+ANSWER / OUTPUT: Hi!
+// Both reference values point to the same mutable StringBuilder object.
+// append changes that object's contents, visible after the call.
+
+13. Write divide(int a, int b) returning double; 0.0 for zero divisor.
+ANSWER:
+    public static double divide(int a, int b) {
+        if (b == 0) {      // guard against division by zero
+            return 0.0;    // behavior requested by worksheet
+        }
+        return (double) a / b; // cast avoids truncating int division
+    }
+// divide(7, 2) -> 3.5
+// divide(7, 0) -> 0.0
+// REAL-WORLD NOTE: silently treating division by zero as 0 can conceal
+// errors; throwing an exception is often preferable in production code.
+
+14. Return a String instead of printing "Welcome " + name.
+ANSWER:
+    public static String welcome(String name) {
+        return "Welcome " + name;
+    }
+// Call as: System.out.println(welcome("Alex"));
+// Separating computation from printing makes the result more reusable.
+
+15. What's wrong with int getName() returning "Alice"?
+ANSWER: The declared return type int does not match the String value.
+FIX:
+    public static String getName() {
+        return "Alice";
+    }
+
+16. Return sum and product using int[].
+ANSWER:
+    public static int[] calc(int a, int b) {
+        int sum = a + b;
+        int product = a * b;
+        return new int[]{sum, product}; // index 0=sum; 1=product
+    }
+// int[] results = calc(3, 4);
+// results[0] is 7; results[1] is 12.
+
+17. Write grade(int score) returning A, B, C, or F.
+ANSWER (reasonable grading thresholds; worksheet does not specify them):
+    public static String grade(int score) {
+        if (score >= 90) return "A";
+        if (score >= 80) return "B";
+        if (score >= 70) return "C";
+        return "F"; // below 70; no D category requested
+    }
+// grade(95) -> "A"; grade(82) -> "B"; grade(75) -> "C"
+// grade(68) -> "F"
+// Optional: add a separate score-range validation for 0..100.
+
+18. Change isEven to return boolean.
+ANSWER:
+    public static boolean isEven(int n) {
+        return n % 2 == 0; // remainder zero = divisible by 2
+    }
+// System.out.println(isEven(8)); prints true
+// System.out.println(isEven(7)); prints false
+
+19. What is "unreachable code after return"?
+ANSWER: Statements placed after an unconditional return in the same block
+can never execute, so Java rejects them as unreachable.
+INVALID EXAMPLE:
+    public static int sample() {
+        return 1;
+        // System.out.println("Never runs"); // compile error if uncommented
+    }
+
+20. Header for a method returning Student with String name, int age.
+ANSWER:
+    public static Student createStudent(String name, int age)
+// This is only a header, as requested. Student must be a defined type.
+// Complete body might be: { return new Student(name, age); }
+// That body requires a matching Student constructor.
+
+21. What does Optional<String> represent?
+ANSWER: A container that may hold a non-null String or be empty, helping
+express an absent result explicitly (java.util.Optional).
+// Example: Optional<String> result = Optional.empty();
+
+22. Overload sum for int and double.
+ANSWER:
+    public static int sum(int a, int b) {
+        return a + b;
+    }
+    public static double sum(double a, double b) {
+        return a + b;
+    }
+// sum(1, 2) -> int 3
+// sum(1.5, 2.5) -> double 4.0
+
+23. Why return values instead of printing inside business logic?
+ANSWER: Callers can reuse, store, test, transform, or display returned data
+in different ways without tying the calculation to console output.
+
+24. Write max(int[] a), assume at least one element.
+ANSWER:
+    public static int max(int[] a) {
+        int biggest = a[0]; // start with the first real value
+        for (int i = 1; i < a.length; i++) {
+            if (a[i] > biggest) {
+                biggest = a[i]; // remember newer maximum
+            }
+        }
+        return biggest;
+    }
+// max(new int[]{-8, -2, -6}) returns -2.
+// Starting with 0 would be WRONG when all elements are negative.
+
+25. What if a non-void method can finish without returning a value?
+ANSWER: Java reports a compile-time "missing return statement" error
+if some reachable normal execution path lacks a return value.
+
+======================================================================
+WORKSHEET C — STATIC VS INSTANCE METHODS
+======================================================================
+
+1. Define static method.
+ANSWER: A static method belongs to its class and can be called without
+creating an instance of that class.
+
+2. Define instance method.
+ANSWER: An instance method runs on a particular object and can work with
+that object's individual state (instance fields).
+
+3. Correct line calling Utils.sayHi() from Main?
+ANSWER: B) Utils.sayHi();
+// Using the class name clearly identifies the static method.
+// C may compile too, but calling static methods through an object is
+// discouraged; A is not valid in Main without an applicable declaration.
+
+4. Correct line calling Car.drive()?
+ANSWER: B) new Car().drive();
+// drive() is NOT static, so it needs a Car object.
+// More readable alternative:
+// Car car = new Car();
+// car.drive();
+
+5. Output of MathUtil.square(5)?
+ANSWER / OUTPUT: 25
+// 5 * 5 = 25; square is static so called with MathUtil.square(...).
+// The println statement must appear inside a method such as main.
+
+6. Fill: static methods belong to ______; instance methods to ______.
+ANSWER: class; object (instance).
+
+7. True/False: Must create an object to call a static method.
+ANSWER: FALSE.
+
+8. True/False: Static methods can be called from main without an object.
+ANSWER: TRUE, if accessible (and with correct qualification if needed).
+
+9. Convert doubleIt(int x) to static.
+ANSWER:
+    public static int doubleIt(int x) {
+        return x * 2;
+    }
+// It only uses the parameter, not any instance field.
+
+10. Why might Math use static methods?
+ANSWER: Operations such as Math.abs(-5) depend on input values, not on
+an individual Math object's state; no object is necessary.
+
+11. Error from calling instance method without an object?
+ANSWER: Often "non-static method ... cannot be referenced from a static
+context", e.g., trying drive() directly from a static main when drive is
+an instance method of the surrounding class.
+
+12. Counter class with instance count and inc().
+ANSWER:
+    class Counter {
+        int count = 0;     // each Counter gets its own count
+        void inc() {
+            count++;       // short for count = count + 1
+        }
+    }
+// Counter first = new Counter();
+// Counter second = new Counter();
+// first.inc(); first.inc();
+// first.count is 2; second.count is 0.
+
+13. Can static method directly access an instance field?
+ANSWER: NO. Static methods have no implicit this object, so Java doesn't
+know which instance's field should be used.
+// Give it an object reference or make the method an instance method.
+
+14. Call length() on a String object.
+ANSWER:
+    String word = "hello";
+    int length = word.length(); // 5
+// String.length() is an INSTANCE method. Array length is a FIELD:
+// int[] numbers = {1,2}; numbers.length; // no parentheses!
+
+15. Instance method more appropriate example.
+ANSWER: bankAccount.deposit(50.0) because the deposit changes THAT
+account's balance, rather than some shared balance for all accounts.
+
+16. Static method more appropriate example.
+ANSWER: Math.max(8, 12) because it computes from inputs without needing
+an object's stored state.
+
+17. Complete Lamp object creation and call.
+ANSWER:
+    public class Lamp {
+        public void on() {
+            System.out.println("On");
+        }
+        public static void main(String[] args) {
+            Lamp lamp = new Lamp(); // create an INSTANCE
+            lamp.on();             // call the INSTANCE method
+        }
+    }
+// OUTPUT: On
+
+18. Use ClassName.method() for ____; object.method() for ____.
+ANSWER: static methods; instance methods.
+
+19. Arrays.sort(...) static or instance?
+ANSWER: STATIC method in java.util.Arrays.
+// import java.util.Arrays; at the top of the file.
+
+20. "hello".toUpperCase() static or instance?
+ANSWER: INSTANCE method on the String object "hello".
+// Returns "HELLO" without modifying the original String.
+
+21. True/False: Static method can be called through an object reference.
+ANSWER: TRUE (Java allows it), but strongly discouraged because the
+method really belongs to the class and the notation is misleading.
+
+22. Most common access modifier for utility method libraries?
+ANSWER: public, for utility methods designed for external callers.
+// Some internal helper methods should be private instead.
+
+23. Should stateful behavior typically be static or instance? Why?
+ANSWER: INSTANCE, because each object's data and behavior should remain
+independent unless the data intentionally belongs to the entire class.
+
+24. Downside of overusing static methods?
+ANSWER: Heavy reliance on global/shared state and tightly coupled static
+calls can make testing, replacement, extension, and concurrency harder.
+// Not all static methods are bad: pure, stateless utilities are useful.
+
+25. How choose static vs. instance for API design?
+ANSWER: Use static when the operation does not need a particular object's
+state or identity; use instance when it operates on, queries, or updates a
+specific object or benefits from polymorphic behavior.
+
+======================================================================
+WORKSHEET D — LOOPS IN JAVA
+======================================================================
+
+1. Three parts of a for loop header, in order?
+ANSWER: initialization; condition; update.
+// for (int i = 0; i < 5; i++) { ... }
+//      INITIALIZE   TEST      UPDATE
+// Flow: initialize once -> check condition -> body -> update -> repeat.
+
+2. Write a for loop printing 1 to 5 inclusive.
+ANSWER:
+    for (int i = 1; i <= 5; i++) {
+        System.out.println(i); // i takes values 1, 2, 3, 4, 5
+    }
+// OUTPUT, one number per line: 1 2 3 4 5
+
+3. Convert for loop printing 0, 1, 2 to while.
+ANSWER:
+    int i = 0;                // initialization outside loop
+    while (i < 3) {          // condition
+        System.out.println(i);
+        i++;                 // update INSIDE loop
+    }
+// OUTPUT: 0, 1, 2 (one per line)
+// Without i++, this loop would never finish.
+
+4. Loop type guaranteeing at least one execution?
+ANSWER: do-while, because its condition is checked AFTER its body.
+
+5. Fill do-while condition.
+ANSWER (example that prints 1 through 5):
+    int i = 1;
+    do {
+        System.out.println(i);
+        i++;
+    } while (i <= 5);
+// The worksheet doesn't specify an ending number, so <= 5 is an
+// illustrative condition; another stopping threshold is possible.
+
+6. Enhanced for-each to print every int[] a element.
+ANSWER:
+    for (int value : a) {             // one value from a at a time
+        System.out.println(value);
+    }
+// No index variable required.
+
+7. Output: i = 2; i <= 8; i += 2.
+ANSWER / OUTPUT:
+    2 4 6 8
+// On one line, spaces after each printed number.
+
+8. What is an off-by-one error?
+ANSWER: A loop includes one too many or excludes one necessary iteration,
+often from confusing < with <= or array.length with last valid index.
+// For an array length of 4, valid indices are 0, 1, 2, 3.
+
+9. Add break when i == 5.
+ANSWER:
+    for (int i = 1; i <= 10; i++) {
+        if (i == 5) {
+            break; // exit the ENTIRE loop immediately
+        }
+        System.out.println(i);
+    }
+// OUTPUT: 1 2 3 4 (one per line); 5 is NOT printed.
+
+10. What does continue do?
+ANSWER: Skips the remainder of the CURRENT iteration and proceeds to the
+next loop iteration (including the update in a normal for loop).
+
+11. Print odd numbers 1 through 9.
+ANSWER:
+    for (int i = 1; i <= 9; i += 2) {
+        System.out.println(i); // 1, 3, 5, 7, 9
+    }
+// Alternative: loop over all numbers and test i % 2 != 0.
+
+12. What's wrong with while(true) printing "Go" forever?
+ANSWER: It is intentionally infinite and contains no break or other exit;
+it floods the console unless externally interrupted. This can be
+appropriate for a service/event loop, but not for a task expected to finish.
+POSSIBLE FIX:
+    int count = 0;
+    while (count < 3) {
+        System.out.println("Go");
+        count++;             // loop ends when count becomes 3
+    }
+
+13. Sum all entries in nums into total.
+ANSWER:
+    int[] nums = {4, 7, 2};
+    int total = 0;                 // accumulator starts at zero
+    for (int value : nums) {
+        total += value;           // total = total + value
+    }
+    System.out.println(total);    // OUTPUT: 13
+
+14. Format 3 x 3 multiplication table with nested loops.
+ANSWER:
+    for (int i = 1; i <= 3; i++) {       // each ROW
+        for (int j = 1; j <= 3; j++) {   // each COLUMN
+            System.out.print((i * j) + " ");
+        }
+        System.out.println();           // end the current row
+    }
+OUTPUT:
+    1 2 3
+    2 4 6
+    3 6 9
+// The inner loop runs three times for EACH single outer-loop iteration.
+// Total multiplications: 3 rows * 3 columns = 9.
+
+15. Best loop when number of iterations is unknown?
+ANSWER: Usually while, because it naturally repeats until a condition
+changes; do-while is useful if the body must run at least once.
+
+16. Best loop for arrays when index is unnecessary?
+ANSWER: Enhanced for-each: for (int value : numbers) { ... }
+
+17. Find target in int[] a; print Found / Not Found.
+ANSWER:
+    int[] a = {5, 10, 15};
+    int target = 10;
+    boolean found = false;              // not found initially
+    for (int value : a) {
+        if (value == target) {
+            found = true;               // record match
+            break;                      // stop searching
+        }
+    }
+    if (found) {
+        System.out.println("Found");
+    } else {
+        System.out.println("Not Found");
+    }
+// OUTPUT: Found
+// A boolean flag lets us print exactly one final result.
+
+18. Convert infinite while to exactly five repetitions.
+ANSWER:
+    int count = 0;
+    while (count < 5) {
+        System.out.println("Hello");
+        count++;                        // 0 through 4: five prints
+    }
+
+19. Output when continue skips i == 3.
+ANSWER / OUTPUT: 1 2 4 5
+// On one line with spaces. The loop still advances through i = 3,
+// but its print statement is skipped for that iteration.
+
+20. Why avoid extremely deep nested loops?
+ANSWER: They are hard to read and debug and can multiply runtime work;
+four loops of length n may perform about n^4 iterations.
+// Some nested loops are needed (e.g., grids); the goal is clarity and
+// avoiding unnecessary work rather than banning them entirely.
+
+21. Reverse-print int[] a from last to first.
+ANSWER:
+    int[] a = {10, 20, 30};
+    for (int i = a.length - 1; i >= 0; i--) {
+        System.out.print(a[i] + " ");
+    }
+// OUTPUT: 30 20 10
+// Starting index: length - 1, because indices start at zero.
+
+22. Fill: Initialization -> Condition -> ______.
+ANSWER: Update (also called increment/decrement or iteration step).
+// Technically, the body executes between the condition and the update.
+
+23. Compute factorial of n = 5.
+ANSWER:
+    int n = 5;
+    int factorial = 1;                 // multiplication identity
+    for (int i = 2; i <= n; i++) {
+        factorial *= i;                // multiply by i each round
+    }
+    System.out.println(factorial);     // OUTPUT: 120
+// 5! = 5 * 4 * 3 * 2 * 1 = 120
+// int overflows for sufficiently large factorials (13! > int max).
+
+24. While loop asking for input until zero.
+ANSWER (runnable in a method with Scanner imported):
+    java.util.Scanner scanner = new java.util.Scanner(System.in);
+    int number = -1;                   // nonzero so loop starts
+    while (number != 0) {
+        System.out.print("Enter a number (0 to quit): ");
+        number = scanner.nextInt();    // read user's next integer
+    }
+    System.out.println("Done");
+// Scanner reads from standard input; this example expects valid integers.
+// If using System.in elsewhere, closing the Scanner also closes System.in.
+
+25. How do loops + arrays + methods work together?
+ANSWER: Arrays store related values, loops visit/process those values,
+and methods package repeated operations into reusable named tasks.
+
+======================================================================
+WORKSHEET E — ARRAYS: DECLARING, INITIALIZING, ACCESSING
+======================================================================
+
+1. Define array in one sentence.
+ANSWER: An array is a fixed-length, indexed collection of elements of the
+same declared type, with indices starting at zero in Java.
+
+2. Preferred declaration for array of int?
+ANSWER:
+    int[] numbers;
+// The brackets next to int emphasize that the TYPE is int[].
+// This declares the variable; it does not yet create an array.
+
+3. Declare and initialize three Strings.
+ANSWER:
+    String[] letters = {"A", "B", "C"};
+// indices: 0 -> "A", 1 -> "B", 2 -> "C"
+
+4. Index of first element?
+ANSWER: 0 (zero).
+
+5. How get length of arr?
+ANSWER: arr.length
+// length is a FIELD of arrays, not a method: NO parentheses.
+// A String instead uses str.length().
+
+6. Output from a[1] when a = {10, 20, 30}?
+ANSWER / OUTPUT: 20
+// Index 1 means SECOND element, not first.
+
+7. Create an int array of size five.
+ANSWER:
+    int[] scores = new int[5];
+// Valid indices: 0 through 4.
+
+8. Defaults after new int[4]?
+ANSWER: {0, 0, 0, 0}
+// Numeric primitive array elements default to zero.
+
+9. Exception from arr[arr.length]?
+ANSWER: ArrayIndexOutOfBoundsException.
+// Last legal index is arr.length - 1 for a nonempty array.
+
+10. Initialize int[2][3] and print row 1, column 2.
+ANSWER:
+    int[][] grid = {
+        {1, 2, 3},     // row 0
+        {4, 5, 6}      // row 1
+    };
+    System.out.println(grid[1][2]); // OUTPUT: 6
+// grid[row][column], both zero-based.
+
+11. Complete indexed for loop for nums.
+ANSWER:
+    for (int i = 0; i < nums.length; i++) {
+        System.out.println(nums[i]);
+    }
+// Condition uses <, because nums[nums.length] is out of bounds.
+
+12. Enhanced for-each for String[] names.
+ANSWER:
+    for (String name : names) {
+        System.out.println(name);
+    }
+// The loop variable name holds each element's reference in turn.
+
+13. Declaration vs initialization.
+DECLARATION: Introduces a variable's name and type (int[] a;).
+INITIALIZATION: Assigns its first value (int[] a = {1, 2};).
+// The "new" operator creates the array object; declaration and
+// object creation are conceptually different operations.
+
+14. Grades {85, 92, 78, 90}, print average.
+ANSWER:
+    int[] grades = {85, 92, 78, 90};
+    int total = 0;
+    for (int grade : grades) {
+        total += grade;           // sum = 345
+    }
+    double average = (double) total / grades.length;
+    System.out.println(average); // OUTPUT: 86.25
+// Casting before division keeps the fractional part.
+// int average = total / grades.length; would yield 86.
+
+15. Output from new String[2]; println(s[1])?
+ANSWER / OUTPUT: null
+// Array elements of reference types default to null, not "".
+
+16. Why prefer type[] name over type name[]?
+ANSWER: type[] name is the conventional style and makes the array type
+clearer, especially when declaring several variables.
+// int[] a, b; clearly declares TWO int-array variables.
+
+17. Arrays have ______ size after creation.
+ANSWER: fixed.
+// Elements can change; the array LENGTH cannot. For resizing,
+// allocate another array or use a resizable collection such as ArrayList.
+
+18. 2D tic-tac-toe array; print center cell.
+ANSWER:
+    char[][] board = {
+        {'X', 'O', 'X'},
+        {'O', 'X', ' '},
+        {' ', 'O', 'X'}
+    };
+    System.out.println(board[1][1]); // OUTPUT: X
+// The center of a 3x3 board is row 1, column 1.
+
+19. Utility method to print arrays as String?
+ANSWER: Arrays.toString(array)
+// Example: java.util.Arrays.toString(new int[]{1, 2})
+// gives "[1, 2]". For nested arrays: Arrays.deepToString(...).
+
+20. Convert int[] to ArrayList<Integer>.
+ANSWER:
+    int[] a = {1, 2, 3, 4};
+    java.util.ArrayList<Integer> list = new java.util.ArrayList<>();
+    for (int value : a) {
+        list.add(value);         // autoboxes int into Integer
+    }
+// list now contains [1, 2, 3, 4].
+// IMPORTANT: Arrays.asList(a) does NOT turn primitive int[] into
+// List<Integer>; it treats the whole primitive array as one element.
+
+21. When prefer ArrayList?
+ANSWER: When the number of elements needs to grow/shrink dynamically,
+or you want convenient methods such as add() and remove().
+
+22. Copy src into existing dest of the same length.
+ANSWER:
+    for (int i = 0; i < src.length; i++) {
+        dest[i] = src[i];       // copy each element's value/reference
+    }
+// For reference-type arrays, this is a SHALLOW copy: referenced objects
+// are not duplicated. Alternative: System.arraycopy(src,0,dest,0,src.length).
+
+23. What's wrong with int[] x; x[0] = 10;?
+ANSWER: x is only declared, not initialized with an array. Local variable
+x must be definitely assigned before use.
+FIX:
+    int[] x = new int[1];
+    x[0] = 10;
+// If x were a field defaulting to null, accessing x[0] would instead
+// throw NullPointerException at runtime.
+
+24. Defaults of new boolean[3]?
+ANSWER: {false, false, false}
+
+25. Why remember zero-based indexing in loops?
+ANSWER: It prevents skipping the first element or trying invalid index
+array.length; valid indices run from 0 up to length - 1.
+
+======================================================================
+WORKSHEET F — ARRAY MANIPULATION WITH METHODS
+======================================================================
+
+1. Write printArray(int[] arr) showing elements on one line.
+ANSWER:
+    public static void printArray(int[] arr) {
+        for (int value : arr) {
+            System.out.print(value + " "); // space after each number
+        }
+        System.out.println();             // finish the line
+    }
+// printArray(new int[]{3, 6, 9}); prints: 3 6 9
+// This assumes arr is not null.
+
+2. Write sum(int[] arr).
+ANSWER:
+    public static int sum(int[] arr) {
+        int total = 0;
+        for (int value : arr) {
+            total += value;              // accumulate each element
+        }
+        return total;                     // caller receives the sum
+    }
+// sum(new int[]{1, 2, 3}) -> 6; empty array -> 0.
+
+3. Write max(int[] arr), length at least one.
+ANSWER:
+    public static int max(int[] arr) {
+        int biggest = arr[0];             // first element as baseline
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] > biggest) {
+                biggest = arr[i];
+            }
+        }
+        return biggest;
+    }
+// Assumes arr != null and arr.length >= 1, per question.
+
+4. Output for {5,3,9,1} and max(a)?
+ANSWER / OUTPUT: 9
+
+5. Write contains(int[] arr, int target).
+ANSWER:
+    public static boolean contains(int[] arr, int target) {
+        for (int value : arr) {
+            if (value == target) {
+                return true;          // stop immediately on first match
+            }
+        }
+        return false;                 // entire array checked, no match
+    }
+// contains(new int[]{4, 7}, 7) -> true.
+
+6. Write reverse(int[] arr) reversing IN PLACE.
+ANSWER:
+    public static void reverse(int[] arr) {
+        int left = 0;                    // first index
+        int right = arr.length - 1;      // last index
+        while (left < right) {
+            int temp = arr[left];        // save left element
+            arr[left] = arr[right];     // move right to left
+            arr[right] = temp;          // move saved left to right
+            left++;                     // move pointers toward middle
+            right--;
+        }
+    }
+// Before: [1, 2, 3, 4]
+// After:  [4, 3, 2, 1]
+// IN PLACE means the original array's elements are rearranged.
+
+7. Complete bubble-sort condition and swap.
+ANSWER:
+    for (int i = 0; i < arr.length - 1; i++) {
+        for (int j = 0; j < arr.length - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {   // left > right: wrong order
+                int temp = arr[j];       // save left item
+                arr[j] = arr[j + 1];    // shift smaller item left
+                arr[j + 1] = temp;      // put saved item on right
+            }
+        }
+    }
+// Sorts ascending, changing arr itself. With each outer pass,
+// the largest remaining item "bubbles" toward the end.
+// Bubble sort is O(n^2); prefer Arrays.sort for practical code.
+
+8. Fill in sorting utility.
+ANSWER:
+    java.util.Arrays.sort(a);
+// Or: import java.util.Arrays; and then Arrays.sort(a);
+// For {9,4,7,1}, array becomes {1,4,7,9}.
+
+9. Write average(int[] arr) returning double.
+ANSWER (with explicit guard for empty/null):
+    public static double average(int[] arr) {
+        if (arr == null || arr.length == 0) {
+            throw new IllegalArgumentException("Array must not be empty");
+        }
+        long total = 0;                  // long reduces risk of sum overflow
+        for (int value : arr) {
+            total += value;
+        }
+        return (double) total / arr.length;
+    }
+// average(new int[]{1,2,3,4}) -> 2.5.
+
+10. Write findIndex(int[] arr, int target).
+ANSWER:
+    public static int findIndex(int[] arr, int target) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == target) {
+                return i;             // index of first matching element
+            }
+        }
+        return -1;                     // special value: not found
+    }
+// findIndex(new int[]{8,9,8}, 8) -> 0.
+
+11. Write copy(int[] src) returning a NEW array.
+ANSWER:
+    public static int[] copy(int[] src) {
+        int[] result = new int[src.length]; // allocate different array
+        for (int i = 0; i < src.length; i++) {
+            result[i] = src[i];             // copy element value
+        }
+        return result;
+    }
+// result != src (different array objects), but contents match.
+// Shortcut: return java.util.Arrays.copyOf(src, src.length);
+
+12. Fill calc() returning sum and product.
+ANSWER:
+    public static int[] calc(int a, int b) {
+        return new int[]{a + b, a * b}; // index 0 sum; index 1 product
+    }
+// calc(2,3) -> {5,6}
+
+13. Write countEvens(int[] arr).
+ANSWER:
+    public static int countEvens(int[] arr) {
+        int count = 0;
+        for (int number : arr) {
+            if (number % 2 == 0) {       // remainder 0 means even
+                count++;
+            }
+        }
+        return count;
+    }
+// countEvens({2,3,6,8}) -> 3; zero is even too.
+
+14. Write sumMatrix(int[][] m).
+ANSWER:
+    public static int sumMatrix(int[][] m) {
+        int total = 0;
+        for (int[] row : m) {             // visit each inner array/row
+            for (int value : row) {      // visit each item in that row
+                total += value;
+            }
+        }
+        return total;
+    }
+// sumMatrix(new int[][]{{1,2,3},{4,5,6}}) -> 21
+// Also handles jagged arrays, provided rows are not null.
+
+15. Output of m[1][0] for {{1,2},{3,4}}?
+ANSWER / OUTPUT: 3
+// Row 1 is {3,4}; column 0 is 3.
+
+16. Write merge(int[] a, int[] b).
+ANSWER:
+    public static int[] merge(int[] a, int[] b) {
+        int[] result = new int[a.length + b.length]; // enough space
+        for (int i = 0; i < a.length; i++) {
+            result[i] = a[i];              // fill beginning from a
+        }
+        for (int i = 0; i < b.length; i++) {
+            result[a.length + i] = b[i];   // append b after a
+        }
+        return result;
+    }
+// merge({1,2}, {7,8,9}) -> {1,2,7,8,9}.
+
+17. Write minMax(int[] arr) returning {min, max}.
+ANSWER:
+    public static int[] minMax(int[] arr) {
+        if (arr == null || arr.length == 0) {
+            throw new IllegalArgumentException("Array must not be empty");
+        }
+        int minimum = arr[0];
+        int maximum = arr[0];
+        for (int value : arr) {
+            if (value < minimum) minimum = value;
+            if (value > maximum) maximum = value;
+        }
+        return new int[]{minimum, maximum};
+    }
+// minMax({5,-3,8}) -> {-3,8}; works even if all numbers negative.
+
+18. Write dedupe(int[] arr) returning no duplicates.
+ANSWER (working implementation preserving FIRST-APPEARANCE order):
+    public static int[] dedupe(int[] arr) {
+        int[] unique = new int[arr.length]; // maximum needed capacity
+        int count = 0;                       // unique values stored so far
+        for (int value : arr) {
+            boolean alreadySeen = false;
+            for (int i = 0; i < count; i++) {
+                if (unique[i] == value) {
+                    alreadySeen = true;
+                    break;
+                }
+            }
+            if (!alreadySeen) {
+                unique[count] = value;
+                count++;
+            }
+        }
+        return java.util.Arrays.copyOf(unique, count);
+    }
+// dedupe({4,2,4,3,2}) -> {4,2,3}
+// Time complexity O(n^2). For large arrays, a LinkedHashSet<Integer>
+// can preserve order with faster typical membership checks.
+
+19. Why validate null or empty arrays at method start?
+ANSWER: Guard clauses prevent confusing failures, illegal math (such as
+dividing by zero for average), and clarify what inputs are allowed.
+// Whether an EMPTY array is valid depends on the operation: sum(empty)
+// can be 0, while max(empty) has no meaningful maximum.
+
+20. Add a guard clause to avg(int[] a).
+ANSWER:
+    public static double avg(int[] a) {
+        if (a == null || a.length == 0) { // || short-circuits
+            throw new IllegalArgumentException("Array is null or empty");
+        }
+        long total = 0;
+        for (int value : a) {
+            total += value;
+        }
+        return (double) total / a.length;
+    }
+// Check a == null FIRST: a.length would crash for a null reference.
+
+21. When return new array vs mutate existing array?
+ANSWER: Return a new array when the caller must keep its original data
+unchanged, e.g., sortedCopy(scores); mutate when intentional in-place
+updates are expected, e.g., reverse(scores).
+
+22. Real-world example using arrays + methods.
+ANSWER: A school stores quiz scores in an int[] and calls methods to
+calculate the class average, find the highest score, and count passing
+scores; the same methods work for different classes.
+EXAMPLE:
+    int[] quizScores = {90, 75, 85};
+    double classAverage = average(quizScores); // 83.333...
+    int topScore = max(quizScores);            // 90
+// Both methods are defined earlier in Worksheet F.
+
+23. One sentence each: Arrays.sort/copyOf/equals.
+- Arrays.sort(a): Rearranges the supplied array elements into ascending
+  order for primitive numeric arrays (lexicographic order for Strings).
+- Arrays.copyOf(a, n): Returns a NEW array containing the first n elements
+  of a, truncating or padding with default values if needed.
+- Arrays.equals(a, b): Returns true if both arrays have the same length
+  and corresponding elements compare equal according to array type.
+// Example: Arrays.equals(new int[]{1,2}, new int[]{1,2}) -> true
+
+24. Write toString(int[] arr), comma-separated, no Arrays.toString.
+ANSWER:
+    public static String toString(int[] arr) {
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < arr.length; i++) {
+            if (i > 0) {
+                result.append(", "); // separator BEFORE items after first
+            }
+            result.append(arr[i]);     // add actual number text
+        }
+        return result.toString();
+    }
+// toString({5,6,7}) -> "5, 6, 7"
+// toString({}) -> "" (empty String)
+// StringBuilder efficiently assembles text inside a loop.
+
+25. Big-picture benefit of methods to manipulate arrays?
+ANSWER: Reusable methods avoid duplicating loops, make programs easier
+to understand, and allow each operation to be tested and fixed once.
